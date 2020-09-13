@@ -1,0 +1,16 @@
+<section>
+    <div id="meeting" class="col-12 jitsi-room">
+    </div>
+</section>
+<scrip>
+    <script>
+    let height = window.screen.height / 2;
+    const domain = 'meet.jit.si';
+    let options = {
+        roomName : "TimesUp",
+        height: height,
+        parentNode: document.querySelector('#meeting')
+    } 
+    api = new JitsiMeetExternalAPI(domain, options);
+
+</script>
