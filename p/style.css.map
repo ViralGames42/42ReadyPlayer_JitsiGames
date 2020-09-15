@@ -1,0 +1,13 @@
+{
+    "version": 3,
+    "mappings": "ACAA;;EAEE;AAFF;;EAEE;AGFF,AAAA,WAAW,CAAA;EACP,KAAK,EAAC,IAAI;EACV,UAAU,EAAE,GAAG;EACf,UAAU,EAAE,KAAK,CAAC,GAAG,CHIT,OAAO;EGHnB,OAAO,EAAE,GAAG;CACf;;AJDD,AAAA,IAAI,EAAE,MAAM,EAAE,IAAI,CAAC;EACf,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;EACV,KAAK,EAAE,IAAI;CACd",
+    "sources": [
+        "../public/stylesheets/style.scss",
+        "../public/stylesheets/bones/colors.scss",
+        "../public/stylesheets/bones/components/navbar.scss",
+        "../public/stylesheets/bones/colors.scss",
+        "../public/stylesheets/bones/components/jitsi-room.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}

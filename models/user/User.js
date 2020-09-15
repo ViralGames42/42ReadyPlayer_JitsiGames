@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
     nombre: {
@@ -24,6 +23,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    puntuacion: {
+        type: Number,
+        default :0
     }
 });
 

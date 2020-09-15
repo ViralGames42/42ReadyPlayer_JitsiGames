@@ -8,11 +8,12 @@
   width: 100%;
   margin-top: 1em;
   border-top: solid 1px #0A1842;
-  padding: 1em; }
+  padding: 1em;
+}
 
 html, header, body {
   margin: 0;
   padding: 0;
-  width: 100%; }
-
+  width: 100%;
+}
 /*# sourceMappingURL=style.css.map */

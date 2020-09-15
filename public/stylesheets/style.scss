@@ -2,7 +2,7 @@
 @import './bones/colors.scss';
 @import './bones/components/navbar.scss';
 @import './bones/components/jitsi-room.scss';
-html, body {
+html, header, body {
     margin: 0;
     padding: 0;
     width: 100%;

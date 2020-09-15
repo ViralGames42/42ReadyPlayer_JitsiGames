@@ -4,20 +4,35 @@ const userController = {};
 
 userController.signup = async (req, res) => {
     if (req.body) {
+        console.log(req.body);
         try {
-            const user = new User(req.body);
+            const user = new User();
+            user.nombre = req.body.nombre;
+            user.email = req.body.email;
+            user.nickname = req.body.nickname;
             /*
             ** si queremos añadir token jwt añadir aqui
             */
-            await user.save();
-            res.status(201).json({
-                msg: "Usuario creado satisfactoriamente.",
-                body: {
-                    user: user
-                }
-            });
+            console.log(user);
+            try {
+                await user.save();
+                res.status(201).json({
+                    msg: "Usuario creado satisfactoriamente.",
+                    body: {
+                        user: user,
+                        id: user._id
+                    }
+                });
+            } catch (err) {
+                return res.status(400).json({
+                    msg: "Error al crear usuario. nickname o email en uso",
+                    error: {
+                        error: err
+                    }
+                });
+            }
         } catch (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 msg: "Error al crear usuario.",
                 error: {
                     error: err
@@ -25,9 +40,6 @@ userController.signup = async (req, res) => {
             });
         }
     }
-    res.status(400).json({
-        msg: "Error. Form vacío"
-    });
 };
 
 userController.login = async (req, res) => {
@@ -43,7 +55,8 @@ userController.login = async (req, res) => {
                 res.status(201).json({
                     msg: "Login correcto.",
                     body: {
-                        user: user
+                        user: user,
+                        id: user._id
                     }
                 });
             }
@@ -55,8 +68,6 @@ userController.login = async (req, res) => {
                 }
             });
         }
-    
-    
     }
     res.status(400).json({
         msg: "Error. Form vacío"

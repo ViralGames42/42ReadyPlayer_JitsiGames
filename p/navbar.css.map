@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "ACAA;;EAEE",
+    "sources": [
+        "../public/stylesheets/bones/components/navbar.scss",
+        "../public/stylesheets/bones/colors.scss"
+    ],
+    "names": [],
+    "file": "navbar.css"
+}
