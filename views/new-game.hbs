@@ -1,0 +1,43 @@
+<section class="container">
+    <div class="row">
+        <h3>New Room:</h3>
+        <button id="create-room" class="col-12">
+            create room
+        </button>
+        <h3>Join Room: </br>
+            Insert password if private room
+        </h3>
+        <form class="col-12">
+            <input type="text" name="inviteCode" id="inviteCode" placeholder="room password">
+
+            <input type="submit" id="join-room" value="Join Room">
+        </form>
+    </div>
+</section>
+<script>
+    const cookieValue = (cookie)=>{
+        return document.cookie
+        .split('; ')
+        .find(row => row.startsWith(cookie))
+        .split('=')[1];
+    };
+
+    const queryValue = (path) => {
+        let subpaths = (window.location.pathname).split('/');
+        let len = subpaths.length - 1;
+        return subpaths[len];
+    };
+
+    const joinRoom = () => {
+        let form = {
+            id: cookieValue("UserId"),
+            inviteCode: $("#inviteCode").val() || "default",
+            roomName: queryValue()
+        };
+        console.log(form);
+    };
+    document.querySelector("#join-room").addEventListener("click", (e) => {
+        e.preventDefault();
+        joinRoom();
+    });
+</script>

@@ -26,9 +26,14 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/room/:id', (req, res) => {
-    res.render('room');
+router.get('/new-game/:id', (req, res) => {
+    res.render('new-game');
 });
+
+/* router.get('/room/:id', (req, res) => {
+    res.render('room');
+}); */
+
 
 /*
 ** USER CONTROLLERS
@@ -48,6 +53,10 @@ router.post("/login", (req, res) => {
 
 router.post('/room/create', (req, res) => {
     roomController.create(req, res);
+});
+
+router.post('/room/:id', (req,res) => {
+    roomController.addUser(req, res);
 });
 
 module.exports = router
