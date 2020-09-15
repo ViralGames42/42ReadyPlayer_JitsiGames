@@ -28,7 +28,7 @@ const submitForm = async () => {
         document.cookie = `Name=${user.nombre}; expires=Thu, 18 Dec 2021 12:00:00 UTC`;
         document.cookie = `NickName=${user.nickname}; expires=Thu, 18 Dec 2021 12:00:00 UTC`;
         document.cookie = `UserId=${response.data.body.id}; expires=Thu, 18 Dec 2021 12:00:00 UTC`;
-        //window.location.href = "/";
+        window.location.href = "/new-game";
     }).catch((error)=>{
         alert(error);
     });

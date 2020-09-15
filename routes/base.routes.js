@@ -26,9 +26,12 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
-router.get('/new-game/:id', (req, res) => {
+router.get('/new-game', (req, res) => {
     res.render('new-game');
 });
+router.get('/room/:id', (req, res) => {
+    res.render('room', {data:req.params});
+})
 
 /* router.get('/room/:id', (req, res) => {
     res.render('room');
@@ -55,7 +58,7 @@ router.post('/room/create', (req, res) => {
     roomController.create(req, res);
 });
 
-router.post('/room/:id', (req,res) => {
+router.post('/room-join/:id', (req,res) => {
     roomController.addUser(req, res);
 });
 

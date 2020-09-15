@@ -25,7 +25,7 @@ roomController.create = async(req, res)=> {
                     msg: "Sala creada satisfactoriamente.",
                     body: {
                         room: room,
-                        name: name
+                        name: name,
                     }
                 });
             }
