@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
@@ -27,6 +26,18 @@ const UserSchema = new mongoose.Schema({
         unique: true
     }
 });
+
+UserSchema.statics.findByCredentials = async (nickname, email) => {
+    const user = await User.findOne({nickname});
+    if (!user) {
+        throw new Error({ error: 'invalid nickname.' });
+    }
+    if (user.email === email) {
+        return user;
+    } else {
+        throw new Error({ error: 'email and nickname mismatch.' })
+    }
+};
 
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
