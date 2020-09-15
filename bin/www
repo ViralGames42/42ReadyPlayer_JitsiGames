@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
+const { randomInt } = require('crypto');
 const http = require('http');
-
 let app = require('../app');
+let game = require('../public/javascripts/game.js')
 
 // catch 404 and render a not-found.hbs template
 app.use((req, res, next) => {
@@ -22,6 +23,7 @@ app.use((err, req, res, next) => {
 });
 
 let server = http.createServer(app);
+let io = require('socket.io')(server);
 
 server.on('error', error => {
   if (error.syscall !== 'listen') { throw error }
@@ -41,6 +43,82 @@ server.on('error', error => {
   }
 });
 
+let messages = [{
+  message: 'chat privado bienvenido',
+  nickname: 'server'
+}];
+
+
+let preguntas = game.preguntas;
+let usuarios = game.usuarios;
+
+/*
+** Connectar con el socket
+**  event: Connection
+*/
+io.on('connection', function(socket){
+  console.log(`El nodo IP: ${socket.handshake.address} ha conectado con el server`)
+  /*
+  **  Aqui iran los eventos una vez conectado con el socket
+  */
+
+  /*
+  **  Emitir messages
+  */
+
+  socket.emit('messages', messages);
+
+  /*
+  **  AÑADIR USUARIOS
+  **  
+  */
+
+  /*
+  **  Evento de recibir un mensaje:
+  **   EVENT: ADD-MESSAGE
+  */
+
+  socket.on('add-message', function(data) {
+    console.log(data);
+    messages.push(data);
+    io.sockets.emit('messages', messages);
+  });
+  
+  /*
+  ** EVENTO PEDIR PREGUNTA
+  **   event: pedir-pregunta
+  **   emit: devuelve una pregunta del array
+  */
+  socket.on('pedir-pregunta', function(data) {
+    let index = Math.floor(Math.random() * preguntas.length - 1);
+    let pregunta = {
+      msg: `pregunta para el usuario: ${data.nickname}`,
+      pregunta: preguntas[index]
+    };
+    socket.emit('devolver-pregunta', pregunta);
+  });
+  
+  /*
+  **  EVENTO RESPONDER PREGUNTA
+  **    event: responder-pregunta
+  **    emit: respuesta-correcta o respuesta-incorrecta
+  */
+
+  socket.on('responder-pregunta', function(data) {
+    let msg= undefined;
+    if (preguntas[data.pregunta].respuesta == data.respuesta)
+    {
+      msg = "respuesta correcta!";
+      socket.emit('respuesta', {msg:msg});
+    } else {
+      msg = "respuesta incorrecta! :(";
+      socket.emit('respuesta', {msg:msg});
+    }
+  });
+
+});
+
 server.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
+
