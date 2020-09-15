@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<script>
+window.onload=function(){
+var nombreOk=false;
+var nickOk=false;
+var emailOk=false;
+    function validarDatos(){
+    if (nombreOk && nickOk && emailOk){
+        alert("All user data  will be correct, congrats.");
+        return true;
+    }else{
+        alert("You may check the form, has errors!!");
+        return false;
+    }
+    }
+       
+    var everyInputs=document.getElementsByTagName('input');
+    for (var i=0;i<(everyInputs.length);i++){
+        everyInputs[i].addEventListener('focus',estilo);
+        everyInputs[i].addEventListener('blur',estilo2);
+        var nodoname=everyInputs[i].name;
+       
+        switch (nodoname){
+                case "nombre":
+                    everyInputs[i].addEventListener('blur',validarNombre);
+                    break;
+              	case "nick":
+                    everyInputs[i].addEventListener('blur',validarNick);
+                    break;
+                case "email":
+                    everyInputs[i].addEventListener('blur',validarEmail);
+                    break;
+                default :break;
+            }
+    }
+function estilo(){
+    this.style.backgroundColor="yellow";
+}
+function estilo2(inputElement){
+    this.style.background='transparent';
+    this.nextSibling.src="http://images.all-free-download.com/images/graphiclarge/tick_ok_sign_4190.jpg";
+}
+function estiloRojo(inElement){
+    inElement.style.backgroundColor="red";
+    inElement.nextSibling.src="http://griponclimate.files.wordpress.com/2013/03/wrong.png";
+}
+       
+function validarNombre(){
+        var nombre=document.getElementById("nombre");   
+        var expresionRegular=/^\w{3,}$/;
+        if ((expresionRegular.test(nombre.value))==true){
+            nombreOk=true;
+            estilo2(nombre);
+        }
+        else {
+            nombreOk=false;
+            estiloRojo(nombre);
+        }
+   
+}
+​
+function validarNick(){
+        var nick=document.getElementById("nick");   
+        var expresionRegular=/^\w{3,}$/;
+        if ((expresionRegular.test(nick.value))==true){
+            nickOk=true;
+            estilo2(nick);
+        }
+        else {
+            nickOk=false;
+            estiloRojo(nick);
+        }
+}
+​
+   
+function validarEmail(){
+    var valorEmail=document.getElementById("email");
+    var expresionRegular=/^([\w-\.]{3,}\@.+\..+)$/;
+    var email=convertirMinusculas(valorEmail.value);
+    email=comprobarAtEmail(email);
+    if ((expresionRegular.test(email))==true) {
+        emailOk=true;
+        estilo2(valorEmail);
+	}
+	else {
+        emailOk=false;
+		estiloRojo(valorEmail);   
+	}
+   
+}
+   
+ 
+function convertirMinusculas(email){
+    return email.toLowerCase();   
+    }
+   
+function comprobarAtEmail(email){
+    var expresion=/\sat\s/g;
+    return email.replace(expresion,'@');
+}
+​
+function validarDatos(){
+    var msg='Wrong imputs are:';
+    if (nombreOk && nickOk && emailOk){
+        alert ("All your data are correct and form will be send, welcome");
+        return true;
+    }else{
+        if (nombreOk===false){
+            msg = msg + 'nombre';
+        }
+	if (nickOk===false){
+            msg = msg + 'nick';
+        }
+        if (emailOk===false){
+            msg = msg + 'email';   
+        }
+        alert (msg);
+        return false;
+    }
+}
+​
+   
+​
+       
+}
+   
+</script>
+    <body>
+        <form name="miniformualario" class="formulario" method="get" onsubmit="return validarDatos()">
+            <label >Name:</label>   
+            <input type="text" id="nombre" name="nombre"/><img width="20" height="20"/><br/>
+            <label >Nick:</label>   
+            <input type="text" id="nick" name="nick"/><img width="20" height="20"/><br/>
+            <label>Mail:</label>
+            <input type="text" id="email" name="email"/><img width="20" height="20"/><br/><br/>
+            <input type="submit"  value="Send" />
+            <input type="reset" value="Clear data" />   
+        </form>
+    <script>
+        
+    
+    </script>
+    </body>
+</html>
