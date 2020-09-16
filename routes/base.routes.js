@@ -30,7 +30,7 @@ router.get('/new-game', (req, res) => {
     res.render('new-game');
 });
 router.get('/room/:id', (req, res) => {
-    res.render('room', {data:req.params});
+    res.render('room');
 })
 
 /* router.get('/room/:id', (req, res) => {

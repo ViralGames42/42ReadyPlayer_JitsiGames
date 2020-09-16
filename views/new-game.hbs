@@ -48,16 +48,25 @@
     **  JOIN ROOM:  
     */
     
-    const joinRoom = () => {
+    const joinRoom = async () => {
         let form = {
             id: cookieValue("UserId"),
             inviteCode: $("#j-inviteCode").val() || "default",
-            roomName: queryValue()
+            roomName: cookieValue("RoomName")
         };
-        console.log(form);
+        await axios.post(`/room-join/${cookieValue("RoomName")}`, form)
+        .then((response)=>{
+            let body = response.data.body;
+            console.log(body);
+            alert(response.data.msg);
+            document.cookie = `RoomName=${response.data.body.name}; expires=Thu, 18 Dec 2021 12:00:00 UTC`;
+            let query = `http://localhost:3000/room-join/${body.room.name}`;
+            let redirect = `http://localhost:3000/room/${body.room.name}`;
+            window.location.href = redirect;
+        }).catch((error)=>{
+            alert(error);
+        });
     };
-
-
     document.querySelector("#join-room").addEventListener("click", (e) => {
         e.preventDefault();
         joinRoom();
@@ -80,7 +89,7 @@
             document.cookie = `RoomName=${response.data.body.name}; expires=Thu, 18 Dec 2021 12:00:00 UTC`;
             let query = `http://localhost:3000/room-join/${response.data.body.name}`;
             let redirect = `http://localhost:3000/room/${response.data.body.name}`;
-            window.location.href = query;
+            window.location.href = redirect;
     }).catch((error)=>{
         alert(error);
     });

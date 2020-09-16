@@ -1,3 +1,27 @@
-{{data}}
-{{>_JitsiRoom}}
-{{>_Room}}
+<section class="container">
+    <div class="row">
+        {{>_JitsiRoom}}
+        {{>_Room}}
+    </div>
+
+</section>
+<section class="row">
+    <div class="col-2"></div>
+    <form onSubmit="setQuery(this);" class="col-8">
+        <h4>Tu codigo de invitacion</h4>
+        <h5 id="inviteCode"></h5>
+        <input type="submit" value="obtener codigo" id="submit">
+    </form>
+    <div class="col-2"></div>
+</section>
+<script>
+    const queryValue = () => {
+        let subpaths = (window.location.pathname).split('/');
+        let len = subpaths.length - 1;
+        return subpaths[len];
+    };
+    document.querySelector("#submit").addEventListener("click", (e) => {
+        e.preventDefault();
+        $("#inviteCode").html(window.location.href);
+});
+</script>
