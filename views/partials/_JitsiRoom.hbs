@@ -1,13 +1,49 @@
-<section class="col-6-lg col-12-md col-12-sm">
-    <div id="meeting" class="jitsi-room"></div>
+<section class="col-12">
+    <form id="start-jitsi">
+        <input type="submit" id="start" value="entrar a la sala">
+    </form>
+    <div id="meeting">
+    </div>
+    <form class="col-8">
+        <h4>Tu codigo de invitacion</h4>
+        <h5 id="inviteCode"></h5>
+        <input type="submit" value="obtener codigo" id="submit">
+    </form>
 </section>
+
 <script>
-    let height = window.screen.height / 2;
-    const domain = 'meet.jit.si';
-    let options = {
-        roomName : "TimesUp",
-        height: height,
-        parentNode: document.querySelector('#meeting')
-    }
-    api = new JitsiMeetExternalAPI(domain, options);
+    const queryValue = () => {
+        let subpaths = (window.location.pathname).split('/');
+        let len = subpaths.length - 1;
+        return subpaths[len];
+    };
+    const cookieValue = (cookie)=>{
+        return document.cookie
+        .split('; ')
+        .find(row => row.startsWith(cookie))
+        .split('=')[1];
+    };
+    document.querySelector("#submit").addEventListener("click", (e) => {
+        e.preventDefault();
+        $("#inviteCode").html(window.location.href);
+        document.querySelector("#submit").remove();
+    });
+    document.querySelector("#start").addEventListener("click", (e) => {
+        e.preventDefault();
+        let height = window.screen.height / 2;
+        const domain = 'meet.jit.si';
+        let name = cookieValue("NickName");
+        console.log(name);
+        let options = {
+            roomName : queryValue(),
+            height: height,
+            parentNode: document.querySelector('#meeting'),
+            userInfo:{
+                displayName: name,
+            }
+        };
+        console.log(options);
+        api = new JitsiMeetExternalAPI(domain, options);
+        document.querySelector("#start-jitsi").remove();
+    });
 </script>
