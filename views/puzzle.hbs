@@ -1,0 +1,30 @@
+<section onload="onload()">
+      <video id="webcam">
+          Your browser is not compatible with HTML5 video tag.
+      </video>
+      &nbsp;
+      <canvas id="canvas">
+          your browser don't support HTML5 Canvas.
+      </canvas>
+      <br /><br />
+      Piezas X:
+      <input id="piezasx" type="range" min="2" max="20" value="3" onchange="document.getElementById('valuepiezasx').innerHTML=document.getElementById('piezasx').value; iniciarJuego()">
+      </input><span id="valuepiezasx">3</span><br />
+      Piezas Y:
+      <input id="piezasy" type="range" min="2" max="20" value="3" onchange="document.getElementById('valuepiezasy').innerHTML=document.getElementById('piezasy').value; iniciarJuego();">
+      </input><span id="valuepiezasy">3</span><br /><br />
+      Modo de juego:
+      <select id="modo" onchange="iniciarJuego()">
+        <option value="mover">Mover</option>
+        <option value="intercambiar">Intercambiar</option>
+      </select><br /><br />
+      Color de fondo:
+      <input id="color" type="color" value="#E6BE6F" onchange="cambiarBackgroundColor()">
+      </input>
+      <a href="http://viralgames.html">
+      	<img id="logo" src="./images/viralgames.png"></img>
+      </a>
+<noscript>
+    Your browser has JavaScript Deactivated.
+</noscript>
+</section>

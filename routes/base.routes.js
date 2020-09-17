@@ -22,6 +22,16 @@ router.get('/register', (req, res) => {
     res.render('register');
 });
 
+//juego de simon
+router.get('/simon', (req, res) => {
+    res.render('simon');
+});
+
+//juego de puzzle
+router.get('/puzzle', (req, res) => {
+    res.render('puzzle');
+});
+
 router.get('/login', (req, res) => {
     res.render('login');
 });
@@ -32,6 +42,16 @@ router.get('/new-game', (req, res) => {
 router.get('/room/:id', (req, res) => {
     res.render('room', {data:req.params});
 })
+
+// pagina de instrucciones
+router.get('/howto', (req, res) => {
+    res.render('howto');
+});
+// pagina de quienes somos
+router.get('/about', (req, res) => {
+    res.render('about');
+});
+
 
 /* router.get('/room/:id', (req, res) => {
     res.render('room');
