@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Game menu</title>
+     </head>
+<script>
+window.onload=function(){
+var nombreOk=false;
+var nickOk=false;
+var emailOk=false;
+    function validarDatos(){
+    if (nombreOk && nickOk && emailOk){
+        alert("All user data  will be correct, congrats.");
+        return true;
+    }else{
+        alert("You may check the form, has errors!!");
+        return false;
+    }
+    }
+       
+    var everyInputs=document.getElementsByTagName('input');
+    for (var i=0;i<(everyInputs.length);i++){
+        everyInputs[i].addEventListener('focus',estilo);
+        everyInputs[i].addEventListener('blur',estilo2);
+        var nodoname=everyInputs[i].name;
+       
+        switch (nodoname){
+                case "nombre":
+                    everyInputs[i].addEventListener('blur',validarNombre);
+                    break;
+              	case "nick":
+                    everyInputs[i].addEventListener('blur',validarNick);
+                    break;
+                case "email":
+                    everyInputs[i].addEventListener('blur',validarEmail);
+                    break;
+                default :break;
+            }
+    }
+function estilo(){
+    this.style.backgroundColor="yellow";
+}
+function estilo2(inputElement){
+    this.style.background='transparent';
+    this.nextSibling.src="http://images.all-free-download.com/images/graphiclarge/tick_ok_sign_4190.jpg";
+}
+function estiloRojo(inElement){
+    inElement.style.backgroundColor="red";
+    inElement.nextSibling.src="http://griponclimate.files.wordpress.com/2013/03/wrong.png";
+}
+       
+function validarNombre(){
+        var nombre=document.getElementById("nombre");   
+        var expresionRegular=/^\w{3,}$/;
+        if ((expresionRegular.test(nombre.value))==true){
+            nombreOk=true;
+            estilo2(nombre);
+        }
+        else {
+            nombreOk=false;
+            estiloRojo(nombre);
+        }
+   
+}
+
+function validarNick(){
+        var nick=document.getElementById("nick");   
+        var expresionRegular=/^\w{3,}$/;
+        if ((expresionRegular.test(nick.value))==true){
+            nickOk=true;
+            estilo2(nick);
+        }
+        else {
+            nickOk=false;
+            estiloRojo(nick);
+        }
+}
+
+   
+function validarEmail(){
+    var valorEmail=document.getElementById("email");
+    var expresionRegular=/^([\w-\.]{3,}\@.+\..+)$/;
+    var email=convertirMinusculas(valorEmail.value);
+    email=comprobarAtEmail(email);
+    if ((expresionRegular.test(email))==true) {
+        emailOk=true;
+        estilo2(valorEmail);
+	}
+	else {
+        emailOk=false;
+		estiloRojo(valorEmail);   
+	}
+   
+}
+   
+ 
+function convertirMinusculas(email){
+    return email.toLowerCase();   
+    }
+   
+function comprobarAtEmail(email){
+    var expresion=/\sat\s/g;
+    return email.replace(expresion,'@');
+}
+
+function validarDatos(){
+    var msg='Wrong imputs are:';
+    if (nombreOk && nickOk && emailOk){
+        alert ("All your data are correct and form will be send, welcome");
+        return true;
+    }else{
+        if (nombreOk===false){
+            msg = msg + 'nombre';
+        }
+	if (nickOk===false){
+            msg = msg + 'nick';
+        }
+        if (emailOk===false){
+            msg = msg + 'email';   
+        }
+        alert (msg);
+        return false;
+    }
+}      
+} 
+</script>
+
+
+     <style>
+         @font-face {
+             font-family: "danube";
+             src: url("fonts/danube.woff") format("woff"),
+                 url("fonts/danube.ttf") format("truetype");
+         }
+         .hidden {
+             -webkit-transition: opacity 1s;
+             z-index: 0;
+             opacity: 0;
+         }
+         .visible {
+             -webkit-transition: opacity 1s;
+             z-index: 1;
+             opacity: 1;
+         }
+         .frame {
+             position: absolute;
+             width: 600px;
+             height: 500px;
+             font-family: "danube";
+             color: white;
+             text-shadow: 0px 0px 20px #00FF00;
+             -webkit-user-select: none;
+             font-size: 25px;
+         }
+         .frame button {
+             -webkit-transition: border-radius 1s, text-shadow 1s, color 1s;
+             font-family: "danube";
+             font-size: 30px;
+             color: #EEE;
+             margin: 10px;
+             padding: 10px;
+             width: 300px;
+             background: none;
+             text-shadow: 0px 0px 8px white;
+             border: 1px solid #dedede;
+             border-radius: 3px;
+             text-decoration: none;
+             border-color: #8dc5da #76b7cf #63abc7;
+             box-shadow: 0px 3px 5px rgba(255, 255, 255, 0.5);
+         }
+         .frame button:hover {
+             border-radius: 20px;
+             text-shadow: 0px 0px 50px white;
+             color: white;
+         }
+         .frame button:active {
+             text-shadow: 0px 0px 20px #00FF00;
+         }
+         body {
+             background-color: #496e9e;
+	     text-align: center;
+             margin: 0 auto;
+             width: 600px;
+             height: 500px;
+             margin-top: 50px;
+             background-image: url('img/back1.jpg');
+         }
+     </style>
+     <script>
+         function Game(gameDiv)
+         {
+             var frames = [];
+             var framesNames = [];
+             for (var i=0; i<gameDiv.childNodes.length; i++)
+             {
+                 var id = gameDiv.childNodes[i].id;
+                 if (id != undefined)
+                 {
+                     var child = gameDiv.childNodes[i];
+                     if (child.classList.contains("frame"))
+                     {
+                         frames[id] = child;
+                         framesNames.push(id);
+                     }
+                 }
+             }
+
+             function setFrameVisible(name)
+             {
+                 frames[name].classList.remove("hidden");
+                 frames[name].classList.add("visible");
+             }
+
+             function setFrameHidden(name)
+             {
+                 frames[name].classList.remove("visible");
+                 frames[name].classList.add("hidden");
+             }
+
+             return {
+                 "setFrameVisible": setFrameVisible,
+                 "setFrameHidden": setFrameHidden
+             };
+         }
+
+         window.addEventListener("load", function ()
+         {
+             game = new Game(document.getElementById("game"));
+         });
+         var game;
+     </script>
+
+     <body>
+         <div id="game">
+	     <!-- main menu div -->
+             <div id="main" class="frame visible">
+                 <h1>                     Our Game                 </h1>
+		 <!-- level -->
+                 <button onclick="game.setFrameVisible('validate');game.setFrameHidden('main');">
+                     New Game
+                 </button>
+		 <!-- High Scores -->
+                 <button onclick="game.setFrameVisible('highscores');game.setFrameHidden('main');">
+                     High Scores
+                 </button>
+		 <!-- Game instructions -->
+                 <button onclick="game.setFrameVisible('howtoplay');game.setFrameHidden('main');">
+                     How to play
+                 </button>
+		 <!-- Credits -->
+                 <button onclick="game.setFrameVisible('about');game.setFrameHidden('main');">
+                     Credits
+                 </button>
+             </div>
+	     <!-- Canvas frame -->		
+             <div id="validate" class="frame hidden">
+			<form name="miniformualario" class="formulario" method="get" onsubmit="return validarDatos()">
+				<label >Name:</label>   
+				<input type="text" id="nombre" name="nombre"/><img width="20" height="20"/><br/>
+				<label >Nick:</label>   
+				<input type="text" id="nick" name="nick"/><img width="20" height="20"/><br/>
+				<label>Mail</label>
+				<input type="text" id="email" name="email"/><img width="20" height="20"/><br/><br/>
+				<input type="submit"  value="Send" />
+				<input type="reset" value="Clear data" />   
+			</form>
+		 <!-- Back to main menu -->
+                 <button onclick="game.setFrameVisible('main');game.setFrameHidden('validate');">
+                     Back to main menu
+                 </button>
+             </div>
+
+
+	     <!-- levels div -->
+             <div id="levels" class="frame hidden">
+                 <h1>                     Select level                 </h1>
+		 <!-- new game button -->
+                 <button onclick="game.setFrameVisible('canvas');game.setFrameHidden('levels');">
+                     Apprentice
+                 </button>
+		 <!-- level -->
+                 <button onclick="game.setFrameVisible('canvas');game.setFrameHidden('levels');">
+                     Medium
+                 </button>
+		 <!-- High Scores -->
+                 <button onclick="game.setFrameVisible('canvas');game.setFrameHidden('levels');">
+                     Advance
+                 </button>
+		 <!-- Credits -->
+                 <button onclick="game.setFrameVisible('canvas');game.setFrameHidden('levels');">
+                     Expert
+                 </button>
+             </div>
+
+	     <!-- Canvas frame -->		
+             <div id="canvas" class="frame hidden">
+                 <canvas><!-- put game code here --></canvas>
+		 <!-- Back to main menu -->
+                 <button onclick="game.setFrameVisible('main');game.setFrameHidden('canvas');">
+                     Back to main menu
+                 </button>
+             </div>
+
+	     <!-- Highscores menu -->
+             <div id="highscores" class="frame hidden">
+                 <h1>                     High Scores                 </h1>
+		 <!-- Back to main menu -->
+                 <button onclick="game.setFrameVisible('main');game.setFrameHidden('highscores');">
+                     Back to main menu
+                 </button>
+             </div>
+
+	     <!-- How to play -->
+             <div id="howtoplay" class="frame hidden">
+                 <h1>                     How to play                 </h1>
+		 <!-- Back to main menu -->
+                 <button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
+                     Back to main menu
+                 </button>
+             </div>
+
+
+	     <!-- Credits page -->
+             <div id="about" class="frame hidden">
+                 <h2>                     Viral games                 </h2>
+                 <br />
+                 <a href="http://viralgames.page.com.es/">
+                     <img src="img/vrg.png" style="width: 100px; height: 120px;"/>
+                 </a>
+                 <br />
+ 		 <!-- Back to main menu -->
+                 <button onclick="game.setFrameVisible('main');game.setFrameHidden('about');">
+                     Back to main menu
+                 </button>
+             </div>
+         </div>
+     </body>
+ </html>

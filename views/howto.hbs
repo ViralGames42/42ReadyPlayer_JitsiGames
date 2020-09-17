@@ -1,11 +1,55 @@
 <!-- How to play -->
 <section>
-	<div id="howtoplay" class="frame visible">
+	<script>
+         function Game(gameDiv)
+         {
+             var frames = [];
+             var framesNames = [];
+             for (var i=0; i<gameDiv.childNodes.length; i++)
+             {
+                 var id = gameDiv.childNodes[i].id;
+                 if (id != undefined)
+                 {
+                     var child = gameDiv.childNodes[i];
+                     if (child.classList.contains("frame"))
+                     {
+                         frames[id] = child;
+                         framesNames.push(id);
+                     }
+                 }
+             }
+
+             function setFrameVisible(name)
+             {
+                 frames[name].classList.remove("hidden");
+                 frames[name].classList.add("visible");
+             }
+
+             function setFrameHidden(name)
+             {
+                 frames[name].classList.remove("visible");
+                 frames[name].classList.add("hidden");
+             }
+
+             return {
+                 "setFrameVisible": setFrameVisible,
+                 "setFrameHidden": setFrameHidden
+             };
+         }
+		 window.addEventListener("load", function ()
+         {
+             game = new Game(document.getElementById("game"));
+         });
+         var game;
+	</script>
+
+	<div id="howtoplay" align = "center">
                  <h1>                     How to play                 </h1>
 	</div>
+	<div id="game">
 	<div id="ourgame" class="frame visible">
-                 <h2>                     Our game                 </h2>
-		The game will be the same for all players, it will be divided into 3 phases:
+                 <h2>                     Tele Party                 </h2>
+		<span class="text">The game will be the same for all players, it will be divided into 3 phases:
 
 			The first phase, we will be able to speak with some restriction.
 			In the second phase, a short word should be used
@@ -16,49 +60,49 @@
 		By turns, it will be decided who will transmit the character or concept found in the word selection made by the system. The process will be carried out three times per team and the word that has been selected will be eliminated.
 
 		A basic rule is that you should not use words or sounds that allow you to guess the character. The time will be determined by a clock that will be available on the game screen and will consist of 30 seconds per turn, the score obtained will be accumulated.
-
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     ->
-                 </button>-->
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     <-
-                 </button>-->
+	</span>
+	</br>
+		 <button onclick="game.setFrameVisible('howtosimon');game.setFrameHidden('ourgame');">
+                    &gt;&gt;
+         </button>
 	</div>
-
-
 
 	<div id="howtosimon" class="frame hidden">
                  <h2>                     Simon says                 </h2>
+<span class="text">
 When entering this game first check that the camera and browser are compatible with the needs of the same when working smoothly, checked this point, the game screen will be displayed over the capture of our webcam that will be making motion checks when we touch each of the color spots on the screen.
 
-		The game will randomly illuminate the color spots, and emitting a sound with each color, the user must enter the sequence of colors in the correct order, using its visual and sound memory. If it succeeds, it will respond with a longer sequence, and so on. If it fails, the user must start again, the different levels of difficulty also increase the speed of the sequence to be repeated.
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     ->
-                 </button>-->
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     <-
-                 </button>-->
+		The game will randomly illuminate the color spots, and emitting a sound with each color, the user must enter the sequence of colors in the correct order, using its visual and sound memory. If it succeeds, it will respond with a longer sequence, and so on. If it fails, the user must start again, the different levels of difficulty also increase the speed of the sequence to be repeated.</span>
+</br>
+</br>
+		 <button onclick="game.setFrameVisible('ourgame');game.setFrameHidden('howtosimon');">
+            &lt;&lt;
+    	</button>
+		<button onclick="game.setFrameVisible('directpuzzle');game.setFrameHidden('howtosimon');">
+            &gt;&gt;
+        </button>
+		</br>
 	</div>
 
 	<div id="directpuzzle" class="frame hidden">
                  <h2>                     Direct Puzzle                 </h2>
+<span class="text">
 It captures the images from the camera and puts them in motion at which point, we will have to start building the puzzle.
 
 two game modes, Move and Swap. In Move mode one of the pieces of the puzzle will disappear leaving a gap. If you click on any of the adjacent pieces (left, right, up and down) to the hole, that piece will move to the hole, leaving another hole in the position it was previously in. The Swap mode consists of clicking on a piece and then clicking on any adjacent piece to swap it. This way of solving puzzles is much simpler than the other way.
 In addition, the page has some sliders that allow us to choose the number of pieces per row, X axis, and per column, Y axis.
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     ->
-                 </button>-->
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     <-
-                 </button>-->
+</span>
+</br>
+</br>
+		<button onclick="game.setFrameVisible('howtosimon');game.setFrameHidden('directpuzzle');">
+            &lt;&lt;
+        </button>
 	</div>
-	<div id="General" class="frame visible">
-	        <!-- Back to main menu -->
-                <!-- poner el código necesario para volver a la página principal-->
-
-		 <!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
-                     Back to main menu
-                 </button>-->
 	</div>
+		<!--<div id="General" class="frame visible">-->
+	    <!-- Back to landing page -->
+		<!--<button onclick="game.setFrameVisible('main');game.setFrameHidden('howtoplay');">
+            Back to main menu
+        </button>-->
+	<!--</div>-->
 </section>
