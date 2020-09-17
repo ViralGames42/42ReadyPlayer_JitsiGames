@@ -8,6 +8,10 @@
       <div class="row">
         <div id="word" class="col-12"></div>
       </div>
+      <div class="row">
+        <div id="comunication" class="col-12 comunication">
+        </div>
+      </div>
       <div id="footeer" class="row">
         <div id="control" class="col-6">
           <div class="row">
@@ -30,6 +34,13 @@
 */
 let conected_flag = 0;
 
+handleMessage = (message) => {
+  if (message.destinationName == 'Game/common') {
+    let com = document.querySelector('#comunication').innerHTML+=`<p>${message.payloadString}\n</p>`;
+  }
+  
+};
+
 /*
 **   END UTILS
 */
@@ -47,7 +58,7 @@ let client = new Paho.MQTT.Client(host, port, client_id);
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 
-let onConnect = async () => {
+let onConnect = () => {
   console.log("onConnect");
   connected_flag = 1;
    
@@ -73,12 +84,12 @@ let onConnect = async () => {
   let msg = `Jugador: ${client_id} conectado`;
   let messageCommon = new Paho.MQTT.Message(msg);
   messageCommon.destinationName = commonTopic;
-  await client.send(messageCommon);
+  client.send(messageCommon);
   //msgTopic:
   let msgt = userTopic;
   let messageTopic = new Paho.MQTT.Message(msgt);
   messageTopic.destinationName = userTopic;
-  await client.send(messageTopic);
+  client.send(messageTopic);
 }
 
 function onError() {
@@ -97,7 +108,9 @@ function onConnectionLost(){
 
 // called when a message arrives
 function onMessageArrived(message) {
+  handleMessage(message)
   console.log("onMessageArrived:"+message.payloadString);
+  console.log("topic: ", message.destinationName);
 }
 
 </script>

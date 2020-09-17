@@ -32,17 +32,25 @@ app.use((err, req, res, next) => {
 
 let server = http.createServer(app);
 
+/*
+**  MQTT CLIENT
+*/
+
+const mqttClient = mqtt.connect('ws://192.168.1.33:9001', {clientId:"server_app"});
 
 /*
 **  GAME UTILS
 */
 
-let handlerTopics = (topic, msg) => {
+let handlerMessage = (topic, msg) => {
+  // Si el msg y el topic es igual 1º conexion del jugador, add jugador y suscribirse al topic
   if (topic === msg.toString()) {
     let name = topic.split('/');
     name = name[1];
     game.rooms[0].metodos.addJugador(name);
     console.log(game.rooms[0]);
+    mqttClient.subscribe(topic);
+    mqttClient.publish(topic, `Wellcome ${name} game will start soon.`);
   } else {
     console.log("Topic: ", topic);
     console.log("Mensaje: ", msg.toString());
@@ -57,7 +65,7 @@ let handlerTopics = (topic, msg) => {
 **  CONFIG MQTT SERVER
 */
 
-const mqttClient = mqtt.connect('ws://192.168.1.33:9001', {clientId:"server_app"});
+
 
 
 /*
@@ -82,7 +90,7 @@ mqttClient.on('message', function (topic, message, packet) {
     // Responding to client
     mqttClient.publish(responseTopic, 'Hello client, yes I can hear you');
     console.log('Responded to client'); */
-    handlerTopics(topic, message);
+    handlerMessage(topic, message);
 });
 
 
