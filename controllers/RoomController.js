@@ -67,7 +67,6 @@ roomController.addUser = async(req, res) => {
     if (req.body) {
         const {inviteCode, id, roomName} = req.body;
         try {
-            console.log("llego");
             let room = await Room.findOne({name: roomName});
             if (!room) {
                 res.status(400).json({

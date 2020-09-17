@@ -1,9 +1,17 @@
 #!/usr/bin/env node
 
-const { randomInt } = require('crypto');
 const http = require('http');
 let app = require('../app');
-let game = require('../public/javascripts/game.js')
+let game = require('../public/javascripts/game.js');
+/*
+** MQTT DEPENDENCIES
+*/
+const mqtt = require('mqtt');
+
+/*
+** END MQTT DEPENDENCIES
+*/
+
 
 // catch 404 and render a not-found.hbs template
 app.use((req, res, next) => {
@@ -23,7 +31,65 @@ app.use((err, req, res, next) => {
 });
 
 let server = http.createServer(app);
-let io = require('socket.io')(server);
+
+
+/*
+**  GAME UTILS
+*/
+
+let handlerTopics = (topic, msg) => {
+  if (topic === msg.toString()) {
+    let name = topic.split('/');
+    name = name[1];
+    game.rooms[0].metodos.addJugador(name);
+    console.log(game.rooms[0]);
+  } else {
+    console.log("Topic: ", topic);
+    console.log("Mensaje: ", msg.toString());
+  }
+}
+
+/*
+**  END GAME UTILS
+*/
+
+/*
+**  CONFIG MQTT SERVER
+*/
+
+const mqttClient = mqtt.connect('ws://192.168.1.33:9001', {clientId:"server_app"});
+
+
+/*
+**  Subscripcion a Topic commun: Game/common
+**  Subscripcion a todos los Topic: #
+**  Subscripcion a los Topicos de cada usuario: Game/user_id => añadir a array de jugadores 
+*/
+
+const commonTopic = 'Game/common';
+const responseTopic = 'responseFromServer';
+
+mqttClient.on('connect', function () {
+  console.log('Server connected to Mqtt broker');
+  mqttClient.subscribe("#");
+  mqttClient.subscribe(commonTopic);
+});
+
+// On receiving message from any client
+mqttClient.on('message', function (topic, message, packet) {
+/*     console.log('Received query from client: -', message.toString());
+    console.log("topic:", topic);
+    // Responding to client
+    mqttClient.publish(responseTopic, 'Hello client, yes I can hear you');
+    console.log('Responded to client'); */
+    handlerTopics(topic, message);
+});
+
+
+/*
+**  END CONFI MQTT SERVER
+*/
+
 
 server.on('error', error => {
   if (error.syscall !== 'listen') { throw error }
@@ -43,80 +109,6 @@ server.on('error', error => {
   }
 });
 
-let messages = [{
-  message: 'chat privado bienvenido',
-  nickname: 'server'
-}];
-
-
-let preguntas = game.preguntas;
-let usuarios = game.usuarios;
-
-/*
-** Connectar con el socket
-**  event: Connection
-*/
-io.on('connection', function(socket){
-  console.log(`El nodo IP: ${socket.handshake.address} ha conectado con el server`)
-  /*
-  **  Aqui iran los eventos una vez conectado con el socket
-  */
-
-  /*
-  **  Emitir messages
-  */
-
-  socket.emit('messages', messages);
-
-  /*
-  **  AÑADIR USUARIOS
-  **  
-  */
-
-  /*
-  **  Evento de recibir un mensaje:
-  **   EVENT: ADD-MESSAGE
-  */
-
-  socket.on('add-message', function(data) {
-    console.log(data);
-    messages.push(data);
-    io.sockets.emit('messages', messages);
-  });
-  
-  /*
-  ** EVENTO PEDIR PREGUNTA
-  **   event: pedir-pregunta
-  **   emit: devuelve una pregunta del array
-  */
-  socket.on('pedir-pregunta', function(data) {
-    let index = Math.floor(Math.random() * preguntas.length - 1);
-    let pregunta = {
-      msg: `pregunta para el usuario: ${data.nickname}`,
-      pregunta: preguntas[index]
-    };
-    socket.emit('devolver-pregunta', pregunta);
-  });
-  
-  /*
-  **  EVENTO RESPONDER PREGUNTA
-  **    event: responder-pregunta
-  **    emit: respuesta-correcta o respuesta-incorrecta
-  */
-
-  socket.on('responder-pregunta', function(data) {
-    let msg= undefined;
-    if (preguntas[data.pregunta].respuesta == data.respuesta)
-    {
-      msg = "respuesta correcta!";
-      socket.emit('respuesta', {msg:msg});
-    } else {
-      msg = "respuesta incorrecta! :(";
-      socket.emit('respuesta', {msg:msg});
-    }
-  });
-
-});
 
 server.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);

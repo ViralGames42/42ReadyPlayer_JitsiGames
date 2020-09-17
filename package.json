@@ -20,10 +20,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.2.10",
     "morgan": "^1.9.0",
+    "mqtt": "^4.2.1",
     "mqtt-connection": "^4.0.0",
     "node-sass-middleware": "^0.11.0",
     "serve-favicon": "^2.5.0",
-    "socket.io": "^2.3.0",
     "validator": "^13.1.1"
   },
   "devDependencies": {
