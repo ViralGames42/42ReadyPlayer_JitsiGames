@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type"
+            content="text/html; charset=UTF-8">
+        <title>SimonHTML5Cam</title>
+        <style>
+            body {
+                background-color: #550000;
+            }
+
+            .hidden {
+                visibility: hidden;
+            }
+        </style>
+
+        <script src='../public/javascripts/scriptsd.js'></script>
+    </head>
+
+    <body>
+        <noscript>
+            Tu navegador no tiene activado JavaScript.
+        </noscript>
+        <audio id="fin" src="res/fin.ogg"></audio>
+        <audio id="azulA" src="res/azul.ogg"></audio>
+        <audio id="verdeA" src="res/verde.ogg"></audio>
+        <audio id="rojoA" src="res/rojo.ogg"></audio>
+        <audio id="amarilloA" src="res/amarillo.ogg"></audio>
+        <img id="simon" class="hidden" src="../public/images/simon.png"></img>
+        <img id="azul" class="hidden" src="../public/images/azul.png"></img>
+        <img id="verde" class="hidden" src="../public/images/verde.png"></img>
+        <img id="rojo" class="hidden" src="../public/images/rojo.png"></img>
+        <img id="amarillo" class="hidden" src="../public/images/amarillo.png"></img>
+        <canvas id="mainCanvas" width="640" height="480">
+        </canvas>
+    </body>
+
+</html>

@@ -31,6 +31,7 @@ html, header, body {
 
 .frame {
   position: absolute;
+  left: 40px;
   width: 650px;
   height: 500px;
   font-family: "danube";
@@ -40,11 +41,91 @@ html, header, body {
   font-size: 25px;
 }
 
+.imgframe {
+  position: absolute;
+  right: 200px;
+}
+
 .text {
   font-family: 'Times New Roman', Times, serif;
   color: darkblue;
   text-align: justify;
   font-size: 18px;
+}
+
+.container2 {
+  display: block;
+  width: 50%;
+  margin: auto;
+}
+
+.btn {
+  margin: 25px;
+  display: inline-block;
+  height: 200px;
+  width: 200px;
+  border: 10px solid black;
+  border-radius: 20%;
+}
+
+.game-over {
+  background-color: red;
+  opacity: 0.8;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.pressed {
+  -webkit-box-shadow: 0 0 20px white;
+          box-shadow: 0 0 20px white;
+  background-color: grey;
+}
+
+.dissapear {
+  -webkit-box-shadow: 0 0 50px white;
+          box-shadow: 0 0 50px white;
+  -webkit-filter: brightness(250%);
+          filter: brightness(250%);
+}
+
+/* puzzle game */
+.webcam {
+  position: relative;
+  vertical-align: top;
+  width: 200px;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.3)));
+}
+
+.gamebutton {
+  -webkit-transition: border-radius 1s, text-shadow 1s, color 1s;
+  font-family: "danube";
+  font-size: 30px;
+  color: #b61a51;
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  background: none;
+  text-shadow: 0px 0px 8px white;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  text-decoration: none;
+  border-color: #8dc5da #76b7cf #63abc7;
+  -webkit-box-shadow: 0px 3px 5px rgba(255, 255, 255, 0.5);
+          box-shadow: 0px 3px 5px rgba(255, 255, 255, 0.5);
 }
 
 .frame button {

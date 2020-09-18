@@ -1,6 +1,3 @@
-<!--<script src="../public/javascripts/puzzscript.js"></script>-->
-
-<script>
 /* puzzle init script */
 
 var piezas, wPieza, hPieza;
@@ -23,6 +20,7 @@ function hasGetUserMedia() {
 function hasURL() {
     window.URL = window.URL || window.webkitURL
         || window.mozURL || window.msURL;
+        alert (window.URL);
     if (window.URL && window.URL.createObjectURL) {
         return true;
     }
@@ -53,10 +51,8 @@ function error(e) {
 } // fin de error();
 
 function setStream(stream) {
-
-    webcam.src = windows.URL.createObjectURL(stream);
+    webcam.src = window.URL.createObjectURL(stream);
 	iniciarJuego();
-
     // Cuando todo esté correctamente cargado se iniciará.
 	webcam.addEventListener("loadedmetadata", function () {
 		canvas.width = webcam.videoWidth;
@@ -222,41 +218,3 @@ function iniciarJuego() {
         hPieza = canvas.height/PIEZAS_Y;
     }
 }
-</script>
-
-<section>
-	<div id = "playing" align="center">
-      	<video id="webcam">
-      		Your browser is not compatible with HTML5 video tag.
-  		</video>
-      	&nbsp;
-    	<canvas id="canvas">
-      		your browser don't support HTML5 Canvas.
-      	</canvas>
-    	<br /><br />
-  		Pieces X:
-		<input id="piezasx" type="range" min="2" max="20" value="3" onchange="document.getElementById('valuepiezasx').innerHTML=document.getElementById('piezasx').value; iniciarJuego()">
-      	</input><span id="valuepiezasx">3</span><br />
-    	Pieces Y:
-  		<input id="piezasy" type="range" min="2" max="20" value="3" onchange="document.getElementById('valuepiezasy').innerHTML=document.getElementById('piezasy').value; iniciarJuego();">
-      	</input><span id="valuepiezasy">3</span><br /><br />
-    	Game mode:
-  		<select id="modo" onchange="iniciarJuego()">
-        <option value="move">Move</option>
-    	<option value="interchange">Interchange</option>
-  		</select><br /><br />
-		Background color:
-      	<input id="color" type="color" value="#E6BE6F" onchange="cambiarBackgroundColor()"></input>
-		<a href="http://viralgames.html">
-    		<img id="logo" src="./images/logo.png" width =45 height = 45></img>
-  		</a>
-	  	</br>
-		</br>
-		<button class="gamebutton" onclick= "onLoadpzz()";>
-        	New Game
-    	</button>
-		<noscript>
-    		Your browser has JavaScript Deactivated.
-		</noscript>
-	</div>
-</section>
